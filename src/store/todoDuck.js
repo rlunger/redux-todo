@@ -9,7 +9,7 @@ export default (state, action) => {
       return [...state, { text: payload.text, completed: false }]
 
     case REMOVE_TODO:
-      return {}
+      return state.filter((todo, index) => index != payload.id)
 
     case TOGGLE_TODO:
       return state.map((todo, index) => {
