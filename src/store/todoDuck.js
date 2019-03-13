@@ -6,16 +6,20 @@ export default (state, action) => {
   const { payload } = action
   switch (action.type) {
     case ADD_TODO:
-      return [...state, { text: payload.text, completed: false }]
+      return [
+        ...state,
+        { text: payload.text, id: payload.id, completed: false }
+      ]
 
     case REMOVE_TODO:
-      return state.filter((todo, index) => index != payload.id)
+      return state.filter(todo => todo.id != payload.id)
 
     case TOGGLE_TODO:
-      return state.map((todo, index) => {
-        if (index === payload.id) {
+      return state.map(todo => {
+        if (todo.id === payload.id) {
           return { ...todo, completed: !todo.completed }
         }
+        return todo
       })
 
     default:
@@ -23,10 +27,10 @@ export default (state, action) => {
   }
 }
 
-export const addTodo = text => {
+export const addTodo = (text, id) => {
   return {
     type: ADD_TODO,
-    payload: { text }
+    payload: { text, id }
   }
 }
 
